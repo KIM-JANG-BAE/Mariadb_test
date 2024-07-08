@@ -70,6 +70,15 @@ def insert_value(cur, table_name, attribute ,value):
     except mariadb.Error as e:
         sys.exit(1)
 
+# 테이블 값 삭제
+def insert_delete(cur, table_name, attribute , condition):
+    try:
+        sql = 'DELETE FROM ' + table_name +  'WHERE' + condition +';'
+        cur.execute(sql)
+
+    except mariadb.Error as e:
+        sys.exit(1)
+
 def update_value(cur, table_name, condition ,attribute, value):
     try:
         sql = 'UPDATE INTO ' + table_name + 'SET ' + attribute + ' = ' + value + 'WHERE' + condition + ';'
