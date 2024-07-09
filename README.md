@@ -66,5 +66,10 @@
 - 'Table_Name' : 테이블 이름
 - condition : 조건문
 
+#GUI
+
+![image](https://github.com/KIM-JANG-BAE/Mariadb_test/assets/100831121/13deb653-f2ff-4bfe-87ee-3036f0d140d9)
+
+
 
 
