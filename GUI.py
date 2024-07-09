@@ -4,93 +4,46 @@ from pathlib import Path
 from tkinter import ttk
 
 
-class Application(ttk.Frame):
+if __name__ == '__main__':
 
-    def __init__(self, window: tk.Tk | tk.Toplevel) -> None:
-        super().__init__(window)
-        window.title("Simple File System Explorer")
-        # show="tree" removes the column header, since we
-        # are not using the table feature.
-        self.treeview = ttk.Treeview(self, show="tree")
-        self.treeview.grid(row=0, column=0, sticky="nsew")
-        # Call the item_opened() method each item an item
-        # is expanded.
-        self.treeview.tag_bind(
-            "fstag", "<<TreeviewOpen>>", self.item_opened)
-        # Make sure the treeview widget follows the window
-        # when resizing.
-        for w in (self, window):
-            w.rowconfigure(0, weight=1)
-            w.columnconfigure(0, weight=1)
-        self.grid(row=0, column=0, sticky="nsew")
-        # This dictionary maps the treeview items IDs with the
-        # path of the file or folder.
-        self.fsobjects: dict[str, Path] = {}
-        self.file_image = tk.PhotoImage(file="file.png")
-        self.folder_image = tk.PhotoImage(file="folder.png")
-        # Load the root directory.
-        self.load_tree(Path(Path(sys.executable).anchor))
+    window = tk.Tk()
+    window.geometry('1000x800')
 
-    def safe_iterdir(self, path: Path) -> tuple[Path, ...] | tuple[()]:
-        """
-        Like `Path.iterdir()`, but do not raise on permission errors.
-        """
-        try:
-            return tuple(path.iterdir())
-        except PermissionError:
-            print("You don't have permission to read", path)
-            return ()
+    frame1 = tk.Frame(window, width=200, height=400, relief='solid')
+    frame2 = tk.Frame(window, width=600, height=400, padx=20, pady= 20, relief='solid')
+    frame3 = tk.Frame(window, width=1000, height= 100, relief='solid')
+    frame4 = tk.Frame(window, width=1000, height= 300, relief='solid')
 
-    def get_icon(self, path: Path) -> tk.PhotoImage:
-        """
-        Return a folder icon if `path` is a directory and
-        a file icon otherwise.
-        """
-        return self.folder_image if path.is_dir() else self.file_image
+    tree = ttk.Treeview(frame1, show='tree')
+    item = tree.insert("", tk.END, text='DB')
+    subitem1 = tree.insert(item, tk.END, text='TABLE1')
+    subitem2 = tree.insert(item, tk.END, text='TABLE2')
+    subitem3 = tree.insert(item, tk.END, text='TABLE3')
+    tree.pack()
+    
+    tree2 = ttk.Treeview(frame2, show='headings')
 
-    def insert_item(self, name: str, path: Path, parent: str = "") -> str:
-        """
-        Insert a file or folder into the treeview and return the item ID.
-        """
-        iid = self.treeview.insert(
-            parent, tk.END, text=name, tags=("fstag",),
-            image=self.get_icon(path))
-        self.fsobjects[iid] = path
-        return iid
+    b1 = tk.Button(frame3, text='기능1')
+    b2 = tk.Button(frame3, text='기능2')
+    b3 = tk.Button(frame3, text='기능3')
+    b4 = tk.Button(frame3, text='기능4')
+    b5 = tk.Button(frame3, text='기능5')
 
-    def load_tree(self, path: Path, parent: str = "") -> None:
-        """
-        Load the contents of `path` into the treeview.
-        """
-        for fsobj in self.safe_iterdir(path):
-            fullpath = path / fsobj
-            child = self.insert_item(fsobj.name, fullpath, parent)
-            # Preload the content of each directory within `path`.
-            # This is necessary to make the folder item expandable.
-            if fullpath.is_dir():
-                for sub_fsobj in self.safe_iterdir(fullpath):
-                    self.insert_item(sub_fsobj.name, fullpath / sub_fsobj, child)
+    b1.grid(row=0, column=0, padx= 20)
+    b2.grid(row=0, column=1, padx= 20)
+    b3.grid(row=0, column=2, padx= 20)
+    b4.grid(row=0, column=3, padx= 20)
+    b5.grid(row=0, column=4, padx= 20)
 
-    def load_subitems(self, iid: str) -> None:
-        """
-        Load the content of each folder inside the specified item
-        into the treeview.
-        """
-        for child_iid in self.treeview.get_children(iid):
-            if self.fsobjects[child_iid].is_dir():
-                self.load_tree(self.fsobjects[child_iid],
-                            parent=child_iid)
+    frame1.grid(row=0, column=0)
+    frame2.grid(row=0,column=1)
+    frame3.grid(row=1, column=0)
+    frame4.grid(row=2, column=0)
 
-    def item_opened(self, _event: tk.Event) -> None:
-        """
-        Handler invoked when a folder item is expanded.
-        """
-        # Get the expanded item.
-        iid = self.treeview.selection()[0]
-        # If it is a folder, loads its content.
-        self.load_subitems(iid)
+    
 
 
-root = tk.Tk()
-app = Application(root)
-root.mainloop()
+    #treeview = ttk.Treeview()
+
+
+    window.mainloop()
