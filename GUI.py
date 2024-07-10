@@ -3,9 +3,14 @@ import tkinter as tk
 from pathlib import Path
 from tkinter import ttk
 
+def func_1():
+    subwindow = tk.Toplevel()
+    subwindow.geometry('400x400')
+    
+
 
 if __name__ == '__main__':
-
+    
     window = tk.Tk()
     window.geometry('1000x800')
 
@@ -24,7 +29,7 @@ if __name__ == '__main__':
     tree.pack()
     
     tree2 = ttk.Treeview(frame2, columns=("Name", "Age", "City"), show='headings')
-
+    
     tree2.heading("Name", text="col_1")
     tree2.heading("Age", text="col_2")
     tree2.heading("City", text="col_3")
@@ -34,7 +39,7 @@ if __name__ == '__main__':
     tree2.insert("", tk.END, values=("Mike Johnson", 22, "Chicago"))
     tree2.pack()
 
-    b1 = tk.Button(frame3, text='기능1')
+    b1 = tk.Button(frame3, text='기능1', command=func_1)
     b2 = tk.Button(frame3, text='기능2')
     b3 = tk.Button(frame3, text='기능3')
     b4 = tk.Button(frame3, text='기능4')
