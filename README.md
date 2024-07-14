@@ -68,7 +68,10 @@
 
 #GUI
 
-![image](https://github.com/KIM-JANG-BAE/Mariadb_test/assets/100831121/13deb653-f2ff-4bfe-87ee-3036f0d140d9)
+![image](https://github.com/user-attachments/assets/8e4939a3-06bd-480c-a6db-d52f6b798d4a)
+
+![image](https://github.com/user-attachments/assets/a8f2bd9c-62d8-4fb6-9db6-a0e593f395aa)
+
 
 
 
